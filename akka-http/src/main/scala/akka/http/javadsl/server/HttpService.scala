@@ -4,8 +4,6 @@
 
 package akka.http.javadsl.server
 
-import akka.http.ParserSettings
-
 import scala.concurrent.Future
 import akka.actor.ActorSystem
 import akka.http.scaladsl.{ server, Http }

@@ -40,24 +40,24 @@ object Route {
    * This conversion is also implicitly available through [[RouteResult.route2HandlerFlow]].
    */
   def handlerFlow(route: Route)(implicit routingSettings: RoutingSettings,
+                                parserSettings: ParserSettings,
                                 materializer: Materializer,
                                 routingLog: RoutingLog,
                                 executionContext: ExecutionContext = null,
                                 rejectionHandler: RejectionHandler = RejectionHandler.default,
-                                exceptionHandler: ExceptionHandler = null,
-                                parserSettings: ParserSettings): Flow[HttpRequest, HttpResponse, Unit] =
+                                exceptionHandler: ExceptionHandler = null): Flow[HttpRequest, HttpResponse, Unit] =
     Flow[HttpRequest].mapAsync(1)(asyncHandler(route))
 
   /**
    * Turns a `Route` into an async handler function.
    */
   def asyncHandler(route: Route)(implicit routingSettings: RoutingSettings,
+                                 parserSettings: ParserSettings,
                                  materializer: Materializer,
                                  routingLog: RoutingLog,
                                  executionContext: ExecutionContext = null,
                                  rejectionHandler: RejectionHandler = RejectionHandler.default,
-                                 exceptionHandler: ExceptionHandler = null,
-                                 parserSettings: ParserSettings): HttpRequest ⇒ Future[HttpResponse] = {
+                                 exceptionHandler: ExceptionHandler = null): HttpRequest ⇒ Future[HttpResponse] = {
     val effectiveEC = if (executionContext ne null) executionContext else materializer.executionContext
 
     {

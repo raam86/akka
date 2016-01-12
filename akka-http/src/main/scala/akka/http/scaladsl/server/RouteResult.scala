@@ -25,11 +25,11 @@ object RouteResult {
   final case class Rejected(rejections: immutable.Seq[Rejection]) extends RouteResult
 
   implicit def route2HandlerFlow(route: Route)(implicit routingSettings: RoutingSettings,
+                                               parserSettings: ParserSettings,
                                                materializer: Materializer,
                                                routingLog: RoutingLog,
                                                executionContext: ExecutionContext = null,
                                                rejectionHandler: RejectionHandler = RejectionHandler.default,
-                                               exceptionHandler: ExceptionHandler = null,
-                                               parserSettings: ParserSettings): Flow[HttpRequest, HttpResponse, Unit] =
+                                               exceptionHandler: ExceptionHandler = null): Flow[HttpRequest, HttpResponse, Unit] =
     Route.handlerFlow(route)
 }
